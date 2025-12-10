@@ -33,7 +33,10 @@ class Settings(BaseSettings):
     SESSION_EXPIRE_MINUTES: int = 60
 
     # Data Processing
-    MONTHS_TO_DAYS_MULTIPLIER: float = 30.44  # Average days per month
+    MONTHS_TO_DAYS_MULTIPLIER: float = 30.42  # Average days per month
+    HOURS_TO_DAYS_DENOMINATOR: int = 24
+    KILO_UNIT: int = 1000
+    TEN_UNIT: int = 10
 
 
 settings = Settings()
