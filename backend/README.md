@@ -17,7 +17,7 @@ poetry shell
 
 ```bash
 # Development mode with auto-reload
-poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+poetry run uvicorn app.main:app --reload --host localhost --port 8000
 
 # Or using Python module
 poetry run python -m app.main
