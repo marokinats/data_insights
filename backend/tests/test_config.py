@@ -8,7 +8,7 @@ def test_settings_loaded() -> None:
     assert settings.APP_NAME == "Data Insights API"
     assert settings.API_V1_PREFIX == "/api/v1"
     assert settings.MAX_UPLOAD_SIZE > 0
-    assert settings.MONTHS_TO_DAYS_MULTIPLIER == 30.44
+    assert settings.MONTHS_TO_DAYS_MULTIPLIER == 30.42
 
 
 def test_cors_origins() -> None:

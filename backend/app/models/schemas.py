@@ -34,12 +34,24 @@ class SeriesData(BaseModel):
     visible: bool = Field(True, description="Whether series is visible")
 
 
+class StatisticsData(BaseModel):
+    """Statistical calculations."""
+
+    p10: float = Field(..., description="10th percentile")
+    p50: float = Field(..., description="50th percentile (median)")
+    p90: float = Field(..., description="90th percentile")
+    mean: float = Field(..., description="Mean value")
+    count: int = Field(..., description="Number of data points used in calculations")
+    total_points: int = Field(..., description="Total number of data points")
+
+
 class ProcessedData(BaseModel):
     """Processed data from CSV."""
 
     session_id: str = Field(..., description="Unique session identifier")
     series: list[SeriesData] = Field(..., description="List of data series")
     original_filename: str = Field(..., description="Original CSV filename")
+    statistics: StatisticsData = Field(..., description="Calculated statistics")
 
 
 class UploadResponse(BaseModel):
