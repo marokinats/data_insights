@@ -10,7 +10,7 @@ curl -sSL https://install.python-poetry.org | python3 -
 
 # Install dependencies and activate virtual environment
 poetry install
-poetry shell
+eval $(poetry env activate)
 ```
 
 ## Running

@@ -19,19 +19,16 @@ repos:
         name: ruff (lint + fix)
         entry: poetry -C backend run ruff check --config backend/pyproject.toml --fix
         language: system
-        pass_filenames: false
         types: [python]
 
       - id: ruff-format
         name: ruff (format)
         entry: poetry -C backend run ruff format --config backend/pyproject.toml
         language: system
-        pass_filenames: false
         types: [python]
 
       - id: mypy
         name: mypy (poetry)
         entry: poetry -C backend run mypy backend/app --config-file backend/pyproject.toml
         language: system
-        pass_filenames: false
         types: [python]

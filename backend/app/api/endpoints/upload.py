@@ -1,11 +1,13 @@
 """File upload endpoints."""
 
+from fastapi import APIRouter, File, HTTPException, UploadFile, status
+
 from app.core.config import settings
 from app.core.exceptions import DataProcessingError, FileValidationError
 from app.models.schemas import ErrorResponse, SeriesData, UploadResponse
 from app.services.data_processor import DataProcessor
 from app.services.session_manager import session_manager
-from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from app.services.statistics_calculator import StatisticsCalculator
 
 router = APIRouter()
 
@@ -62,16 +64,19 @@ async def upload_csv(file: UploadFile = File(...)) -> UploadResponse:
     # Process data
     try:
         processor = DataProcessor()
+        calculator = StatisticsCalculator()
         df = processor.read_csv(content)
 
         # Process DataFrame
         processed_df, series_names = processor.process_raw_dataframe(df)
 
         # Extract series data
+        all_series_data = []
         series_list: list[SeriesData] = []
         for series_name in series_names:
             x_values, y_values, count_stat = processor.get_series_data(processed_df, series_name)
 
+            all_series_data.append((x_values, y_values, count_stat))
             series_list.append(
                 SeriesData(
                     name=series_name,
@@ -81,12 +86,15 @@ async def upload_csv(file: UploadFile = File(...)) -> UploadResponse:
                     visible=True,
                 )
             )
+        # Calculate statistics
+        stats = calculator.calculate_combined_statistics(all_series_data)
 
         session_id = session_manager.create_session(file.filename)
         session_data = {
             "processed_df": processed_df.to_dict(),
             "series_names": series_names,
             "series_list": [s.model_dump() for s in series_list],
+            "statistics": stats,
         }
         session_manager.update_session_data(session_id, session_data)
 
