@@ -87,7 +87,7 @@ async def upload_csv(file: UploadFile = File(...)) -> UploadResponse:
                 )
             )
         # Calculate statistics
-        stats = calculator.calculate_combined_statistics(all_series_data)
+        stats = calculator.calculate_rowwise_statistics(all_series_data)
 
         session_id = session_manager.create_session(file.filename)
         session_data = {

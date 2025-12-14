@@ -1,28 +1,13 @@
 """Data retrieval endpoints."""
 
-import math
-from typing import Any
-
 from fastapi import APIRouter, HTTPException, status
+from utils.helpers import clean_float_values
 
 from app.core.exceptions import SessionNotFoundError
 from app.models.schemas import ErrorResponse, ProcessedData, SeriesData, StatisticsData
 from app.services.session_manager import session_manager
 
 router = APIRouter()
-
-
-def clean_float_values(obj: Any) -> Any:
-    """Recursively clean NaN and Infinity values from data structures."""
-    if isinstance(obj, float):
-        if math.isnan(obj) or math.isinf(obj):
-            return None
-        return obj
-    elif isinstance(obj, dict):
-        return {k: clean_float_values(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
-        return [clean_float_values(item) for item in obj]
-    return obj
 
 
 @router.get(
@@ -47,7 +32,6 @@ async def get_processed_data(session_id: str) -> ProcessedData:
     """
     try:
         session = session_manager.get_session(session_id)
-
         session_data = session["data"]
 
         if not session_data:
