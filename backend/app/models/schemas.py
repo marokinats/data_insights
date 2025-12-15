@@ -79,7 +79,6 @@ class ChartConfig(BaseModel):
     show_p10: bool = Field(default=False, description="Show P10 line")
     show_p50: bool = Field(default=False, description="Show P50 line (median)")
     show_p90: bool = Field(default=False, description="Show P90 line")
-    show_mean: bool = Field(default=False, description="Show mean line")
     series_config: list[SeriesConfig] | None = Field(
         default=None, description="Per-series configuration (visibility, color)"
     )

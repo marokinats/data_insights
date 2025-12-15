@@ -10,7 +10,7 @@ class StatisticsCalculator:
 
     def calculate_percentiles(self, values: list[float | None], count_stat: list[bool]) -> dict[str, float]:
         """
-        Calculate percentiles (P10, P50, P90) and mean.
+        Calculate percentiles (P10, P50, P90).
         Only includes values where count_stat is True.
 
         Args:
@@ -18,7 +18,7 @@ class StatisticsCalculator:
             count_stat: Boolean flags indicating which values to include
 
         Returns:
-            Dictionary with p10, p50, p90, mean, and count
+            Dictionary with p10, p50, p90 and count
 
         Raises:
             DataProcessingError: If no valid data points
@@ -35,7 +35,6 @@ class StatisticsCalculator:
             "p10": float(np.percentile(arr, 10)),
             "p50": float(np.percentile(arr, 50)),  # median
             "p90": float(np.percentile(arr, 90)),
-            "mean": float(np.mean(arr)),
             "count": len(valid_values),
         }
 

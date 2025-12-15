@@ -4,6 +4,7 @@ from typing import Any
 
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from utils.helpers import clean_float_values
 
 from app.models.schemas import ChartConfig, ChartType, SeriesData
 
@@ -117,13 +118,23 @@ class ChartGenerator:
 
             color = self._get_series_color(series, idx, statistics_shown)
 
+            _series_x = []
+            _series_y = []
+            cleaned_series_x = clean_float_values(series.x_values)
+            cleaned_series_y = clean_float_values(series.y_values)
+            for x, y in zip(cleaned_series_x, cleaned_series_y):
+                if y:
+                    _series_x.append(x)
+                    _series_y.append(y)
+
             fig.add_trace(
                 go.Scatter(
-                    x=series.x_values,
-                    y=series.y_values,
+                    x=_series_x,
+                    y=_series_y,
                     mode="lines",
                     name=series.name,
-                    line=dict(color=color, width=2),
+                    type="scatter",
+                    line=dict(color=color, width=1),
                     connectgaps=False,
                     hovertemplate=(
                         f"<b>{series.name}</b><br>" "Time: %{x:.2f} days<br>" "Value: %{y:.2f}<br>" "<extra></extra>"
@@ -174,7 +185,7 @@ class ChartGenerator:
                     y=cumulative_y,
                     mode="lines",
                     name=series.name,
-                    line=dict(color=color, width=2),
+                    line=dict(color=color, width=1),
                     hovertemplate=(
                         f"<b>{series.name}</b><br>"
                         "Time: %{x:.2f} days<br>"
@@ -212,7 +223,7 @@ class ChartGenerator:
                     y=y_values,
                     mode="lines",
                     name="P10",
-                    line=dict(color=self.STATISTICS_COLORS["p10"], width=3, dash="dash"),
+                    line=dict(color=self.STATISTICS_COLORS["p10"], width=2),
                     connectgaps=False,
                     hovertemplate=("<b>P10</b><br>" "Time: %{x:.2f} days<br>" "P10: %{y:.2f}<br>" "<extra></extra>"),
                 )
@@ -226,7 +237,7 @@ class ChartGenerator:
                     y=y_values,
                     mode="lines",
                     name="P50 (Median)",
-                    line=dict(color=self.STATISTICS_COLORS["p50"], width=3, dash="dash"),
+                    line=dict(color=self.STATISTICS_COLORS["p50"], width=2),
                     connectgaps=False,
                     hovertemplate=(
                         "<b>P50 (Median)</b><br>" "Time: %{x:.2f} days<br>" "P50: %{y:.2f}<br>" "<extra></extra>"
@@ -242,7 +253,7 @@ class ChartGenerator:
                     y=y_values,
                     mode="lines",
                     name="P90",
-                    line=dict(color=self.STATISTICS_COLORS["p90"], width=3, dash="dash"),
+                    line=dict(color=self.STATISTICS_COLORS["p90"], width=2),
                     connectgaps=False,
                     hovertemplate=("<b>P90</b><br>" "Time: %{x:.2f} days<br>" "P90: %{y:.2f}<br>" "<extra></extra>"),
                 )
@@ -271,7 +282,7 @@ class ChartGenerator:
                 y=counts,
                 mode="lines",
                 name="Defined Points Count",
-                line=dict(color="purple", width=2),
+                line=dict(color="purple", width=1),
                 fill="tozeroy",
                 fillcolor="rgba(128, 0, 128, 0.2)",
                 hovertemplate=("Time: %{x:.2f} days<br>" "Count: %{y}<br>" "<extra></extra>"),
@@ -333,7 +344,7 @@ class ChartGenerator:
                     y=counts,
                     mode="lines",
                     name="Defined Points",
-                    line=dict(color="purple", width=2),
+                    line=dict(color="purple", width=1),
                     fill="tozeroy",
                     fillcolor="rgba(128, 0, 128, 0.2)",
                 ),
@@ -378,9 +389,9 @@ class ChartGenerator:
         show_legend = config.show_legend if config else True
 
         fig.update_layout(
-            title=title,
-            xaxis_title="Time (days)",
-            yaxis_title="Value",
+            title=dict(text=title),
+            xaxis_title=dict(text="Time (days)"),
+            yaxis_title=dict(text="Value"),
             hovermode="x unified",
             template="plotly_white",
             showlegend=show_legend,

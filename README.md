@@ -6,12 +6,13 @@ A web-based application for processing time-series data from CSV files, performi
 
 - CSV file upload and processing
 - Time-series data analysis
-- Statistical calculations (P10, P50, P90, Mean)
+- Statistical calculations (P10, P50, P90)
 - Interactive charts (line and cumulative)
 - Customizable visualizations
 - Export to PDF, PNG, and CSV
 
 ## Project Structure
+
 ```bash
 data_insights/
 ├── backend/ # Python FastAPI backend
@@ -24,12 +25,14 @@ data_insights/
 ## Tech Stack
 
 ### Backend
+
 - Python 3.11+
 - FastAPI
 - Pandas & NumPy
 - Plotly
 
 ### Frontend
+
 - React 18+ with TypeScript
 - Vite
 - Plotly.js
@@ -92,4 +95,4 @@ MIT
 
 ## Authors
 
-Tania Marokina  💅
+Tania Marokina 💅
