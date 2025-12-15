@@ -1,0 +1,123 @@
+@import "../../styles/variables/index.less";
+@import "../../styles/mixins/index.less";
+
+.file-uploader {
+  .flex-column();
+  gap: @spacing-lg;
+
+  &__dragger {
+    .ant-upload-drag {
+      border: 2px dashed @border-color;
+      border-radius: @border-radius-lg;
+      background: @background-color-light;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: @primary-color;
+        background: fade(@primary-color, 5%);
+      }
+    }
+
+    .ant-upload-drag-icon {
+      .anticon {
+        color: @primary-color;
+        font-size: 48px;
+      }
+    }
+
+    .ant-upload-text {
+      font-size: @font-size-lg;
+      color: @text-color;
+      margin-top: @spacing-md;
+    }
+
+    .ant-upload-hint {
+      color: @text-color-secondary;
+      font-size: @font-size-sm;
+    }
+  }
+
+  &__info {
+    background: @component-background;
+    padding: @spacing-md;
+    border-radius: @border-radius-base;
+    border-left: 3px solid @info-color;
+
+    &-title {
+      font-weight: 600;
+      color: @text-color;
+      margin-bottom: @spacing-sm;
+    }
+
+    &-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        color: @text-color-secondary;
+        font-size: @font-size-sm;
+        padding: @spacing-xs 0;
+
+        &:before {
+          content: "•";
+          color: @info-color;
+          font-weight: bold;
+          display: inline-block;
+          width: 1em;
+          margin-right: @spacing-xs;
+        }
+      }
+    }
+  }
+
+  &__status {
+    .flex-between();
+    padding: @spacing-md;
+    background: fade(@success-color, 10%);
+    border-radius: @border-radius-base;
+    border-left: 3px solid @success-color;
+
+    &-info {
+      .flex();
+      gap: @spacing-md;
+      align-items: center;
+
+      .anticon {
+        font-size: @font-size-xl;
+        color: @success-color;
+      }
+    }
+
+    &-text {
+      .flex-column();
+      gap: @spacing-xs;
+
+      &-title {
+        font-weight: 600;
+        color: @text-color;
+      }
+
+      &-details {
+        font-size: @font-size-sm;
+        color: @text-color-secondary;
+      }
+    }
+  }
+
+  &__error {
+    padding: @spacing-md;
+    background: fade(@error-color, 10%);
+    border-radius: @border-radius-base;
+    border-left: 3px solid @error-color;
+    color: @error-color;
+  }
+
+  .respond-to-md({
+    &__dragger {
+      .ant-upload-drag-icon .anticon {
+        font-size: 36px;
+      }
+    }
+  });
+}

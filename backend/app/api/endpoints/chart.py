@@ -43,6 +43,7 @@ async def generate_chart(config: ChartConfig) -> dict[str, Any]:
         HTTPException: If session not found or configuration is invalid
     """
     try:
+        statistics_series = None
         session = session_manager.get_session(config.session_id)
         session_data = session["data"]
 

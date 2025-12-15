@@ -1,0 +1,132 @@
+@import "../../styles/variables/index.less";
+@import "../../styles/mixins/index.less";
+
+.chart-viewer {
+  .flex-column();
+  gap: @spacing-lg;
+  height: 100%;
+
+  &__container {
+    background: @component-background;
+    border-radius: @border-radius-lg;
+    padding: @spacing-lg;
+    box-shadow: @box-shadow-card;
+    min-height: 500px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: @box-shadow-hover;
+    }
+  }
+
+  &__loading {
+    .flex-center();
+    min-height: 500px;
+    .flex-column();
+    gap: @spacing-md;
+
+    .ant-spin {
+      .ant-spin-dot-item {
+        background-color: @primary-color;
+      }
+    }
+
+    &-text {
+      color: @text-color-secondary;
+      margin-top: @spacing-md;
+    }
+  }
+
+  &__empty {
+    .flex-center();
+    min-height: 500px;
+    .flex-column();
+    gap: @spacing-md;
+
+    .anticon {
+      font-size: 64px;
+      color: @text-color-tertiary;
+    }
+
+    &-text {
+      color: @text-color-secondary;
+      font-size: @font-size-lg;
+    }
+
+    &-hint {
+      color: @text-color-tertiary;
+      font-size: @font-size-sm;
+    }
+  }
+
+  &__error {
+    .flex-center();
+    min-height: 500px;
+    .flex-column();
+    gap: @spacing-md;
+    padding: @spacing-lg;
+
+    .anticon {
+      font-size: 64px;
+      color: @error-color;
+    }
+
+    &-text {
+      color: @error-color;
+      font-size: @font-size-lg;
+      text-align: center;
+    }
+  }
+
+  &__plot {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .modebar {
+      right: 10px !important;
+      top: 10px !important;
+    }
+  }
+
+  &__info {
+    .flex-between();
+    padding: @spacing-md;
+    background: @background-color-light;
+    border-radius: @border-radius-base;
+    font-size: @font-size-sm;
+
+    &-item {
+      .flex();
+      gap: @spacing-xs;
+      align-items: center;
+
+      &-label {
+        color: @text-color-secondary;
+      }
+
+      &-value {
+        color: @text-color;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .respond-to-md({
+    &__container {
+      padding: @spacing-md;
+      min-height: 400px;
+    }
+
+    &__plot {
+      min-height: 400px;
+    }
+
+    &__info {
+      .flex-column();
+      gap: @spacing-sm;
+      align-items: flex-start;
+    }
+  });
+}
